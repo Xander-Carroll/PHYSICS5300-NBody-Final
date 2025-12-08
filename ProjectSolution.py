@@ -8,6 +8,25 @@ import numpy as np
 # A static class which contains the methods used to solve the N-Body problem numerically.
 class NBodyOrbit:
     @staticmethod
+    def load_results(results_file):
+        """
+        Given the name of a save file, will import the r and v arrays.
+
+        Parameters
+        ----------
+        results_file    : string    : the name of the file to import r and v from
+
+        Return
+        ----------
+        return[0] : float array       : t_pts
+        return[1] : float tuple array : positions [(rx1, ry1, rz1), ...]
+        return[2] : float tuple array : velocities [(vx1, vy1, vz1), ...]
+        """
+
+        data = np.load(results_file)
+        return data["t"], data["r"], data["v"]
+
+    @staticmethod
     def accelerations(r, m, G=1.0, eps=1e-3):
         """
         Given the position of each body, computes the acceleration using the equations of motion.
@@ -36,18 +55,19 @@ class NBodyOrbit:
         return a
 
     @staticmethod
-    def leapfrog_solve(r0, v0, m, t_pts, G=1.0, eps=1e-3):
+    def leapfrog_solve(r0, v0, m, t_pts, G=1.0, eps=1e-3, results_file=None):
         """
         Returns filled arrays r0 and v0 which correspond to each time step in t_pts.
 
         Parameters
         ----------
-        r0      : float tuple array : initial positions [(rx1, ry1, rz1), ...]
-        v0      : float tuple array : initial velocities [(vx1, vy1, vz1), ...]
-        m       : float array       : masses [m1, m2, ...]
-        t_pts   : float array       : an array of evenly spaced time steps when positions and velocites should be found.
-        G       : float             : gravitational constant
-        eps     : float             : softening parameter
+        r0              : float tuple array : initial positions [(rx1, ry1, rz1), ...]
+        v0              : float tuple array : initial velocities [(vx1, vy1, vz1), ...]
+        m               : float array       : masses [m1, m2, ...]
+        t_pts           : float array       : an array of evenly spaced time steps when positions and velocites should be found
+        G               : float             : gravitational constant
+        eps             : float             : softening parameter
+        results_file    : string            : the name of the file to save r and v to (None to not save results) 
 
         Return
         ----------
@@ -85,9 +105,12 @@ class NBodyOrbit:
             r[i+1] = r[i] + v_half * dt                                                 # Update the position.
             v[i+1] = v_half + NBodyOrbit.accelerations(r[i+1], m, G, eps) * dt * 0.5    # Update the velocity by a half step.
 
+        # Save the results if a file was given.
+        if results_file != None:
+            np.savez_compressed(results_file, t=t_pts, r=r, v=v)
+
         # Return the updated results.
         return r, v
-
 
 # Tell the user that they are using this file incorrectly.
 if __name__ == '__main__':
