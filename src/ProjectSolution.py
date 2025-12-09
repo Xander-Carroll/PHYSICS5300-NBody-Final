@@ -112,6 +112,42 @@ class NBodyOrbit:
         # Return the updated results.
         return r, v
 
+    @staticmethod
+    def random_case(n, t_pts, G=1.0, eps=1e-3, results_file=None):
+        """
+        Will create n bodies with random positions and velocities. Then will solve the case and return the r, v arrays.
+
+        Parameters
+        ----------
+        n               : int           : the number of random bodies to make
+        t_pts           : float array   : an array of evenly spaced time steps when positions and velocites should be found
+        G               : float         : gravitational constant
+        eps             : float         : softening parameter
+        results_file    : string        : the name of the file to save r and v to (None to not save results) 
+
+        Return
+        ----------
+        return[0] : float array         : masses [m1, m2, ...]
+        return[1] : float tuple array   : positions [(rx1, ry1, rz1), ...]
+        return[2] : float tuple array   : velocities [(vx1, vy1, vz1), ...]
+        """
+
+        m = np.ones(n)
+
+        theta = np.random.uniform(0, 2*np.pi, n)
+        radii = np.random.uniform(0, 10, n)
+        r0 = np.column_stack([radii*np.cos(theta), radii*np.sin(theta), np.random.normal(0, 0.1, n)])
+
+        v0 = np.zeros_like(r0)
+        speeds = np.sqrt(1.0 / np.linalg.norm(r0, axis=1))
+        v0[:,0] = -r0[:,1] / np.linalg.norm(r0[:,:2], axis=1) * speeds
+        v0[:,1] =  r0[:,0] / np.linalg.norm(r0[:,:2], axis=1) * speeds
+
+        r, v = NBodyOrbit.leapfrog_solve(r0, v0, m, t_pts, G, eps, results_file)
+
+        return m, r, v
+
+
 # Tell the user that they are using this file incorrectly.
 if __name__ == '__main__':
     print("[NOTICE]: This file should be included and used in your project. It should not be run as a stand-alone script.")
