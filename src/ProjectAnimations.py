@@ -22,8 +22,11 @@ A_TRAIL_TIME = 0.8
 
 # The details for each body.
 m = [1.0, 1.0, 1.0]
-r0 = [[-0.970004,  0.243087, 0.0], [ 0.970004, -0.243087, 0.0], [ 0.000000,  0.000000, 0.0]]
-v0 = [[-0.466203, -0.432365, 0.0], [-0.466203, -0.432365, 0.0], [ 0.932407,  0.864731, 0.0]]
+
+# Figure 8
+r0 = [[-1, 0], [1, 0], [0, 0]]
+v0 = [[0.347111, 0.532728], [0.347111, 0.532728], [-0.694222, -1.065456]]  
+
 
 # The length and time step of the solution.
 t_pts = np.arange(0, 10, 0.01)
@@ -49,7 +52,7 @@ class NBodyAnimation(mn.Scene):
             self.add(dot)
 
         # Add trails for each body.
-        trails = [FadingTrail(dot, t_tracker) for dot in dots]
+        trails = [FadingTrail(dot, t_tracker, fade_time=A_TRAIL_TIME) for dot in dots]
         for trail in trails: self.add(trail)
 
         # Add the updater for each body.
