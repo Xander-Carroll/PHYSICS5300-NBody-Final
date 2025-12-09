@@ -12,7 +12,7 @@ from ProjectSolution import NBodyOrbit
 
 # The animation details.
 A_OUTPUT_NAME = "three-body.mp4"        # The name of the video that will be produced.
-A_FPS = 15                              # The FPS that the video should run at.
+A_FPS = 60                              # The FPS that the video should run at.
 A_HEIGHT = 1080                         # The height of the video in pixels.
 A_RUN_TIME = 25                         # How many seconds the output video should be.
 A_NUM_PERIODS = 2.5                     # How many periods should be shown in the video.
