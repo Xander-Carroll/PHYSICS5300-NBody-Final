@@ -1,5 +1,5 @@
-# This file can be used to create a manim animation of an orbit.
-# Usage: python ./ProjectAnimations.py
+# This file can be used to create a manim animation of several orbits in a grid.
+# Usage: python ./3BodyAnimations.py
 
 ## External library includes
 import numpy as np
