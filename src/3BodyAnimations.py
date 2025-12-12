@@ -38,7 +38,7 @@ class NBodyAnimation(mn.Scene):
 
         for r0_case, v0_case, period in zip(self.r0_cases, self.v0_cases, self.periods):
             # Simulate three periods for each case.
-            t_pts = np.arange(0, A_NUM_PERIODS * period, 0.01)
+            t_pts = np.arange(0, A_NUM_PERIODS * period, 0.001)
             r, v = NBodyOrbit.leapfrog_solve(r0_case, v0_case, self.m, t_pts, G=1.0, eps=1e-3)
 
             # Rescale the positions to be in the range [-1, 1]

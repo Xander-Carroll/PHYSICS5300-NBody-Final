@@ -44,13 +44,13 @@ class NBodyOrbit:
         """
 
         # Compute ri - rj.
-        rij = r[:, None, :] - r[None, :, :]
+        rij = r[None, :, :] - r[:, None, :]
 
         # Compute the 1/rij^3 between all pairs (with eps as a softening parameter).
         d3 = (np.sum(rij**2, axis=-1) + eps**2) ** -1.5
 
         # Compute acceleration.
-        a = np.sum((-G * m[None, :] * d3)[:, :, None] * rij, axis=1)
+        a = np.sum(G * m[None, :, None] * d3[:, :, None] * rij, axis=1)
 
         return a
 
