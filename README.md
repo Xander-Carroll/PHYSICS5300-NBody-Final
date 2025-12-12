@@ -8,7 +8,7 @@ Start with the `FinalProject.ipynb` file.
 
 ## Project Organization
 
-The `ProjectInstructions.pdf` document are directions provided by the class.
+The `ProjectInstructions.pdf` document contains directions provided by the class.
 
 The `FinalProject.ipynb` file or the `FinalProject.pdf` export of that notebook present a self-contained lesson on how the N-Body problem was solved. The notebook matches the structure of the *ProjectInstructions* file.
 
@@ -17,7 +17,7 @@ The `src` directory contains python scripts that can be used to solve the N-Body
 - The `*Animation.py` files use the integrator to create animations. 
 
 The `media` directory contains resources made for the project.
-- The `videos` directory contains the animations made by those scripts.
+- The `videos` directory contains the animations made by the provided scripts.
 - The `presentations` directory contains the presentation slides used on *12-9-25*. 
   - The animations were removed from the slides to reduce file size.
 
@@ -31,3 +31,4 @@ To create animations, run either of provided `src/*Animation.py` scripts.
 - ex) `python ./src/3BodyAnimation.py`
 
 To use the numerical integrator in other projects, include the `src/ProjectSolution` script.
+- ex) `from ProjectSolution import NBodyOrbit`
